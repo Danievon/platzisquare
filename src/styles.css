@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "~font-awesome/css/font-awesome.css";
+
+.numero_par{
+
+background: blue;
+color:yellow;
+
+}
+
+.advertencia{
+color:white;
+background-color: orange;
+padding: 10px;
+
+}
+
+.aprobado{
+color: white;
+background-color: green;
+padding: 10px;
+}
+
+.suspenso{
+    color:white;
+    background-color: red;
+    padding: 10px;
+
+
+}

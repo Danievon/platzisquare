@@ -1,0 +1,177 @@
+<app-layout>
+    <div class="jumbotron">
+        <h1>Angular CLI v6 + Bootstrap & FontAwesome</h1>
+        <p>
+          In this tutorial you learn how to use Angular CLI v6 with Bootstrap and FontAwesome!
+        </p>
+      </div>
+  </app-layout> 
+<!--The content below is only a placeholder and can be replaced.-->
+
+<div style="text-align:center">
+  <h1 >
+    Primer lanzamiento de {{ title }}!
+  </h1>
+<h3> {{a+b}} </h3>
+<hr />
+<button [disabled]="!listo" (click)="hacerAlgo()"> Click me!</button>
+<hr />
+<input type="text" placeholder="Primer nombre" [(ngModel)]="nombre"/>
+
+<input type="text" placeholder="Segundo nombre" [(ngModel)]="nombre1"/>
+<!--con [(ngModel)]   aceptamos en bindeo de datos dual
+// abajo utilizamos string interpoation para traer la variable--->
+<br/>
+
+Mi nombre es {{nombre}} + {{nombre1}}
+</div>
+
+<br/>
+<h3>Aqui estamos probando las directivas, lista de negocios</h3>
+
+<ul>
+<!---por cada  iteracion del arreglo declaramos una variable-->
+ <!--No podemos  utilizar 2 directivas estructurales en el mismo elemento--> 
+<!--al utiliza ngIf se debe colocar asi--->
+<ng-container *ngFor="let namevar of lugares"> <!-- se declara la varible namevar, es cada iteración de la lista de lugares--->
+ <li *ngIf="namevar.active"> {{namevar.nombre}} </li>  <!--pregutamos x el atrib active y solo muestra los true --->
+</ng-container>
+</ul>
+
+ <hr/>
+ <ul>
+ <ng-container *ngFor="let namevar of lugares; let i =index">
+   <!---podemos obtener el numero de iteracion o index q hace en cada una de las iteraciones de la lista.--->
+  <li [ngStyle]="{color:(namevar.active) ? 'black' : 'gray'}" [ngClass]="{numero_par:(i+1) % 2 !==0 }">{{namevar.nombre}} </li>
+<!--- Si es numero par el modulo es 0--->
+ </ng-container>
+ </ul>
+
+ <hr/>
+
+ <!--- En esta voy a mostrar a las personas que tengan una deuda mayor a 10--->
+ <ul>
+    <ng-container *ngFor="let familiar of deudas">
+
+        <li *ngIf="familiar.valor>=10"> {{familiar.nombre}} </li> 
+
+      </ng-container>
+</ul>
+
+
+<!--- ------------------------------------------------------------------------->
+
+
+ <!-- this creates a google map on the page with the given lat/lng from -->
+<!-- the component as the initial center of the map: -->
+<agm-map [latitude]="lat" [longitude]="lng">
+  <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+</agm-map>
+
+<hr/>
+ <!--- -------------------------------EJEMPLO DIRECTIV NG STYLE------------------------------------------>
+<h4> Introduzca la puntuacion del aluno(ejemplo Directiva NG STYLE)</h4>
+<input type="number" class="form-control" [(ngModel)]="puntuacion">
+<hr>
+<h4 style="display:inline-block;"> Puntuacion Obtenida:&nbsp; </h4>
+<h4 style="display:inline-block;" [ngStyle]="{color:setColor()}">{{puntuacion}}</h4>
+
+
+  <!--- --------------------------------------Ejemplo directiva ngiF----------------------------------------------------------->
+  <h3>¿Cuál es la capital de España?  ejemplo ng if</h3> 
+  <input type="text" class="form-control" [(ngModel)]="capital">  <!---form control, me deja ver que es bootstrap----->
+  <p *ngIf="!capital; else correcto">Complete la pregunta</p>  <!-- si no encuentra la propiedad capital entonces
+    muestra el texto,pero si detecta q se escribe en el formulario, entonces dirige a la etiqueta con el id correcto  ------>
+  <ng-template #correcto>
+  <h4 *ngIf="setResultado(); else incorrecto">¡Correcto!</h4>
+ <!---nos compara la variable y devuelve un valor true o false segun lo escrito, si es true  imprime el texto 
+  "¡Correcto!" si es false dirige a la etiqueta incorrecto, la cual imprime "intentelo nuevamente"  ----->
+  </ng-template>
+  <ng-template #incorrecto>
+  <h4>Lo siento, inténtelo de nuevo</h4>
+  </ng-template>
+   <!--Veo 1 defecto: es que empieza a comparar desde la primera letra q escriba y me dice q es incorrecta
+    hasta que acabo de escribir el nombre me dice q es correcto ------->
+
+<!--- --------------------------------------Ejemplo directiva ngClass----------------------------------------------------------->
+  <h4>Intruduzco la puntuacion del Alumno ejemplo ngClass</h4>
+
+  <input type='text' class='form-control'[(ngModel)]='puntuacion'>
+  <hr>
+  <div *ngIf='puntuacion'>
+
+<h4 *ngIf="puntuacion>= 0 &&puntuacion <= 10; else aviso"
+ [ngClass]="{aprobado:puntuacion>=5,
+  suspenso:puntuacion<5}">
+Puntuacion obtenida:{{puntuacion}}
+  </h4>
+  <ng-template  #aviso>
+    <h4 *ngIf="puntuacion > 10" class="advertencia">
+      Introduzca una puntuacion menor a 10</h4>
+
+<h4 *ngIf="puntuacion < 0" class="advertencia">
+      Introduzca una puntuacion mayor o igual a 10</h4>
+<ng-template>
+
+
+
+
+
+
+
+
+
+  <!--- ---------------------------------------Ejemplo directiva ngFor-------------------------------------------->
+  <hr>
+<div class='constructor'>
+
+ <h3>Cursos  disponibles, directiva ngFor</h3> 
+ <!--el ngFor itera el array cursos y guarda cada iteracion en la variable local curso  ---->
+  <!-- de esta manera se generan tantos items li como elementos tenga el array  ---->
+<ul>
+<li *ngFor='let curso of cursos'>
+  <h4>{{curso}}</h4>
+</li>
+
+</ul>
+</div>
+
+
+   <!----------------------------Ejemplo directiva ngFor iterar un array de objetos JSON--------------->
+   
+  <!-----------------Otra de las formas habituales de empleo de la directiva ngFor es iterar un array
+de objetos JSON, la forma estandarizada de objetos JavaScript que utilizan las
+bases de datos NoSQL basadas en JavaScript.------------------------------->
+
+<hr>
+
+
+<table class="table table-bordered table-striped tabla">
+    <thead>
+    <tr class="filters">
+    <th>id</th>
+    <th>Nombre</th>
+    <th>Apellidos</th>
+    <th>Ciudad</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let alumno of alumnos">
+    <td>{{ alumno.id }}</td>
+    <td>{{ alumno.nombre }}</td>
+   
+    <td>{{ alumno.ciudad }}</td>
+    
+    
+    </tr>
+    </tbody>
+    </table>
+
+   <!------------------------------------------>
+
+
+   <!--TAREA COMPARAR NGSTYLE Y NG CLASS, Conocer la diferencia--------------------------------------->
+
+<!------------------------------------------>
+
+
